@@ -5,51 +5,15 @@ from tkinter import *
 from tkinter.ttk import *
 from tkinter import messagebox
 
-from word_count_box.smart_text import SmartText
+from components.ui.smart_text import SmartText
 
 CONFIG_FILE = 'word_counts.json'
 
 
-class MeasuredEntryFrame(Frame):
-
-    def __init__(self, max_words, master=None, **kw):
-        super().__init__(master, **kw)
-        self.max_words = max_words
-
-        self.text = SmartText(self)
-        self.text.pack(side='top', anchor='w', fill=BOTH, expand=YES)
-        self.text.bind('<Key>', lambda e: self.on_entry())
-
-    def on_entry(self):
-        if self.word_count() >= self.max_words:
-            self.text.config(fg='red')
-        else:
-            self.text.config(fg='green')
-
-    def word_count(self):
-        return len(self.get_text().split(' '))
-
-    def get_text(self):
-        return self.text.get(1.0, END).rstrip().lstrip()
 
 
-class ProgressEntryFrame(MeasuredEntryFrame):
-    LABEL_TEXT = '{:.2f}% Complete: {} of {} words'
 
-    def __init__(self, max_words, master=None, **kw):
-        super().__init__(max_words, master, **kw)
-        self.progress_label = Label(text=ProgressEntryFrame.LABEL_TEXT.format(0.0, 0, self.max_words))
-        self.progress_label.pack(side='bottom', anchor='w', fill=BOTH, expand=YES)
 
-        self.progress = Progressbar(self, orient=HORIZONTAL, length=self.max_words, mode='determinate')
-        self.progress.pack(side='bottom', anchor='w', fill=BOTH, expand=YES)
-
-    def on_entry(self):
-        super().on_entry()
-        percent = (self.word_count() / self.max_words) * 100
-        self.progress['value'] = percent
-        self.progress_label.config(
-            text=ProgressEntryFrame.LABEL_TEXT.format(percent, self.word_count(), self.max_words))
 
 
 class AddWordCountFrame(Frame):
