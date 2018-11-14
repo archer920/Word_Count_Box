@@ -141,7 +141,7 @@ class SelectFrame(Frame):
         selection = self.combo_box.get()
 
         if selection in self.values:
-            self.entry_frame.max_words = self.values[selection]
+            self.entry_frame.max_words = int(self.values[selection])
             self.entry_frame.on_entry()
         else:
             messagebox.showerror('Error', 'Please pick a value')
