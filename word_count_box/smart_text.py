@@ -4,8 +4,8 @@ from tkinter import *
 class SmartText(Text):
     def __init__(self, master=None, next_widget=None, previous_widget=None, cnf={}, fg='green', bg='black', undo=True,
                  insertbackground='white', padx=10, pady=10, wrap=WORD, **kw):
-        super().__init__(master, cnf, fg=fg, bg=bg, undo=True,
-                         insertbackground=insertbackground, wrap=wrap, padx=padx, pady=10, **kw)
+        super().__init__(master, cnf, fg=fg, bg=bg, undo=undo,
+                         insertbackground=insertbackground, wrap=wrap, padx=padx, pady=pady, **kw)
         self.next_widget = next_widget
         self.previous_widget = previous_widget
         self._key_bindings()
