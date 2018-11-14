@@ -5,6 +5,8 @@ from tkinter import *
 from tkinter.ttk import *
 from tkinter import messagebox
 
+from word_count_box.smart_text import SmartText
+
 CONFIG_FILE = 'word_counts.json'
 
 
@@ -14,7 +16,7 @@ class MeasuredEntryFrame(Frame):
         super().__init__(master, **kw)
         self.max_words = max_words
 
-        self.text = Text(self, fg='green', bg='black', insertbackground='white', wrap=WORD)
+        self.text = SmartText(self)
         self.text.pack(side='top', anchor='w', fill=BOTH, expand=YES)
         self.text.bind('<Key>', lambda e: self.on_entry())
 
