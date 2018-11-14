@@ -2,9 +2,10 @@ from tkinter import *
 
 from components.application_configuration.product_frame_configuration import ProductFrameConfiguration
 from components.ui.measured_entry_frame import MeasuredEntryFrame
+from components.ui.scrolled_frame import VerticalScrolledFrame
 
 
-class ProductFrame(Frame):
+class _ProductFrame(Frame):
 
     def __init__(self, pfc: ProductFrameConfiguration, master=None, cnf={}, **kw):
         super().__init__(master, cnf, **kw)
@@ -13,7 +14,7 @@ class ProductFrame(Frame):
                                                required_word_count=pfc.introduction_word_count)
 
         self.aspects = []
-        for i in range(1, pfc.num_aspects):
+        for i in range(1, pfc.num_aspects + 1):
             aspect = MeasuredEntryFrame(master=self,
                                         frame_label=pfc.aspect_label(i),
                                         required_word_count=pfc.aspect_word_count)
@@ -24,14 +25,14 @@ class ProductFrame(Frame):
                                              required_word_count=pfc.cost_value_count)
 
         self.pros = []
-        for i in range(1, pfc.num_pros):
+        for i in range(1, pfc.num_pros + 1):
             pro = MeasuredEntryFrame(master=self,
                                      frame_label=pfc.pro_label(i),
                                      required_word_count=pfc.pro_word_count)
             self.pros.append(pro)
 
         self.cons = []
-        for i in range(1, pfc.num_cons):
+        for i in range(1, pfc.num_cons + 1):
             con = MeasuredEntryFrame(master=self,
                                      frame_label=pfc.con_label(i),
                                      required_word_count=pfc.con_word_count)
@@ -40,6 +41,17 @@ class ProductFrame(Frame):
         widgets = [self.introduction, *self.aspects, self.cost_value, *self.pros, *self.cons]
         for w in widgets:
             w.pack(side='top', fill=BOTH, expand=YES)
+
+
+class ProductFrame(Frame):
+
+    def __init__(self, pfc: ProductFrameConfiguration, master=None, cnf={}, **kw):
+        super().__init__(master, cnf, **kw)
+        self.scroll_frame = VerticalScrolledFrame(master)
+        self.scroll_frame.pack(fill=BOTH, expand=YES)
+
+        self.pfc_frame = _ProductFrame(pfc=pfc, master=self.scroll_frame.interior)
+        self.pfc_frame.pack(fill=BOTH, expand=YES)
 
 
 if __name__ == '__main__':
