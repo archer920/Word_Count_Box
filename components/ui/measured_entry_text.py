@@ -4,9 +4,14 @@ from components.ui.smart_text import SmartText
 
 
 class MeasuredEntryText(SmartText):
+    HEIGHT_OFFSET = 10
 
     def __init__(self, required_word_count: int, master=None, **kw) -> None:
-        super().__init__(master=master, **kw)
+        expected_height = int(required_word_count / MeasuredEntryText.HEIGHT_OFFSET)
+        if expected_height == 0:
+            expected_height = 1
+
+        super().__init__(master=master, height=expected_height, **kw)
         self.required_word_count: int = required_word_count
         self.bind('<Key>', lambda e: self.on_entry())
 
@@ -25,6 +30,6 @@ class MeasuredEntryText(SmartText):
 
 if __name__ == '__main__':
     r = Tk()
-    me = MeasuredEntryText(required_word_count=10, master=r)
+    me = MeasuredEntryText(required_word_count=20, master=r)
     me.pack(fill=BOTH, expand=YES)
     mainloop()
