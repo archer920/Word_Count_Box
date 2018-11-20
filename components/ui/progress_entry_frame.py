@@ -18,6 +18,7 @@ class ProgressEntryFrame(Frame):
         self.progress = Progressbar(self, orient=HORIZONTAL,
                                     length=self.measured_entry.required_word_count, mode='determinate')
         self.progress.pack(side='right', anchor='s', fill=X, expand=YES)
+        self.measured_entry.bind('<Key>', lambda e: self.on_entry())
 
     def on_entry(self) -> None:
         self.measured_entry.on_entry()
@@ -25,6 +26,12 @@ class ProgressEntryFrame(Frame):
         self.progress['value'] = percent
         self.progress_label.config(
             text=ProgressEntryFrame.LABEL_TEXT.format(percent, self.measured_entry.word_count(), self.measured_entry.required_word_count))
+
+    def get_text(self) -> str:
+        return self.measured_entry.get_text()
+
+    def clear_text(self) -> None:
+        self.measured_entry.clear_text()
 
 
 if __name__ == '__main__':

@@ -3,32 +3,35 @@ from tkinter import *
 
 class SmartText(Text):
     def __init__(self, master=None, next_widget=None, previous_widget=None, cnf={}, fg='green', bg='black', undo=True,
-                 insertbackground='white', padx=10, pady=10, wrap=WORD, **kw):
+                 insertbackground='white', padx=10, pady=10, wrap=WORD, **kw) -> None:
         super().__init__(master, cnf, fg=fg, bg=bg, undo=undo,
                          insertbackground=insertbackground, wrap=wrap, padx=padx, pady=pady, **kw)
         self.next_widget = next_widget
         self.previous_widget = previous_widget
         self._key_bindings()
 
-    def select_all(self):
+    def select_all(self) -> None:
         self.tag_add(SEL, '1.0', END + '-1c')
         self.mark_set(INSERT, '1.0')
         self.see(INSERT)
 
-    def focus_next(self):
+    def focus_next(self) -> None:
         if self.next_widget:
             self.next_widget.focus_set()
 
-    def focus_previous(self):
+    def focus_previous(self) -> None:
         if self.previous_widget:
             self.previous_widget.focus_set()
 
-    def _key_bindings(self):
+    def _key_bindings(self) -> None:
         self.bind('<Command-a>', lambda e: self.select_all())
         self.bind('<Control-a>', lambda e: self.select_all())
 
-        self.bind('<Control-Tab>', lambda e: self.focus_next())
-        self.bind('<Shift-Tab>', lambda e: self.focus_previous())
+        self.bind('<Shift-Tab>', lambda e: self.focus_next())
+        self.bind('<Control-Tab>', lambda e: self.focus_previous())
+
+    def clear_text(self) -> None:
+        self.delete(1.0, END)
 
 
 if __name__ == '__main__':

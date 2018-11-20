@@ -1,5 +1,5 @@
-class ProductFrameConfiguration:
-    def __init__(self, introduction_title: str, introduction_word_count: int,
+class ProductReviewConfiguration:
+    def __init__(self, short_review_title: str, short_review_word_count: int,
                  num_aspects: int, aspect_label_template: str, aspect_word_count: int,
                  cost_value_title: str, cost_value_count: int,
                  num_pros: int, pro_label_template: str, pro_word_count: int,
@@ -16,8 +16,8 @@ class ProductFrameConfiguration:
         self.aspect_word_count = aspect_word_count
         self.aspect_label_template = aspect_label_template
         self.num_aspects = num_aspects
-        self.introduction_word_count = introduction_word_count
-        self.introduction_title = introduction_title
+        self.short_review_word_count = short_review_word_count
+        self.short_review_title = short_review_title
 
     def aspect_label(self, index: int) -> str:
         if index < 1 or index > self.num_aspects:
@@ -38,13 +38,16 @@ class ProductFrameConfiguration:
             return self.con_label_template.format(index)
 
 
+DEFAULT_PRODUCT_CONFIGURATION = ProductReviewConfiguration(short_review_title='Product',
+                                                           short_review_word_count=60,
+                                                           num_aspects=2, aspect_label_template='Important Aspect {}', aspect_word_count=30,
+                                                           cost_value_title='Cost and Value', cost_value_count=30,
+                                                           num_pros=5, pro_label_template='Pro {}', pro_word_count=10,
+                                                           num_cons=2, con_label_template='Con {}', con_word_count=10)
+
+
 if __name__ == '__main__':
-    pfc = ProductFrameConfiguration(introduction_title='Product',
-                                    introduction_word_count=60,
-                                    num_aspects=2, aspect_label_template='Important Aspect {}', aspect_word_count=30,
-                                    cost_value_title='Cost and Value', cost_value_count=30,
-                                    num_pros=5, pro_label_template='Pro {}', pro_word_count=10,
-                                    num_cons=2, con_label_template='Con {}', con_word_count=10)
+    pfc = DEFAULT_PRODUCT_CONFIGURATION
 
     print('Testing aspect_label...')
     for i in range(0, 4):

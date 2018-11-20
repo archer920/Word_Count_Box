@@ -5,6 +5,7 @@ from tkinter import *
 from tkinter.ttk import *
 from tkinter import messagebox
 
+from components.ui.progress_entry_frame import ProgressEntryFrame
 from components.ui.smart_text import SmartText
 
 CONFIG_FILE = 'word_counts.json'
@@ -107,7 +108,7 @@ class SelectFrame(Frame):
         selection = self.combo_box.get()
 
         if selection in self.values:
-            self.entry_frame.max_words = int(self.values[selection])
+            self.entry_frame.measured_entry.required_word_count = int(self.values[selection])
             self.entry_frame.on_entry()
         else:
             messagebox.showerror('Error', 'Please pick a value')
@@ -117,7 +118,7 @@ class MainWindow(Frame):
 
     def __init__(self, master=None, **kw):
         super().__init__(master, **kw)
-        self.entry_frame = ProgressEntryFrame(max_words=100, master=master)
+        self.entry_frame = ProgressEntryFrame(required_word_count=100, master=master)
         self.select_frame = SelectFrame(entry_frame=self.entry_frame, master=master)
         self.add_word_count_frame = AddWordCountFrame(update_cb=self.select_frame.refresh_values, master=master)
 
