@@ -1,6 +1,6 @@
 from tkinter import *
 
-from components.ui.smart_text import SmartText
+from components.ui.common.smart_text import SmartText
 
 
 class ProductOutputFrame(Frame):

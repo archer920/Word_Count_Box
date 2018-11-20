@@ -12,7 +12,7 @@ from components.ui.product_frames.short_review_frame import ShortReviewFrame
 
 class ProductFrame(Frame):
 
-    def __init__(self, product_review_configuration=DEFAULT_PRODUCT_CONFIGURATION, master=None, cnf={}, **kw):
+    def __init__(self, product_review_configuration=DEFAULT_PRODUCT_CONFIGURATION, include_output_frame = False, master=None, cnf={}, **kw):
         super().__init__(master, cnf, **kw)
 
         self.note_book = Notebook(self)
@@ -44,24 +44,29 @@ class ProductFrame(Frame):
                                  num_entries=product_review_configuration.num_cons)
         self.note_book.add(self.cons, text='Cons')
 
-        self.output_frame = ProductOutputFrame(self)
-        self.output_frame.update_button.configure(command=self.update_review)
-        self.output_frame.clear_button.configure(command=self.clear)
-        self.note_book.add(self.output_frame, text='Product Review')
+        if include_output_frame:
+            self.output_frame = ProductOutputFrame(self)
+            self.output_frame.update_button.configure(command=self.update_review)
+            self.output_frame.clear_button.configure(command=self.clear)
+            self.note_book.add(self.output_frame, text='Product Review')
+        else:
+            self.output_frame = None
 
         self.note_book.pack(expand=1, fill=BOTH)
 
         self.short_summary.review_area.progress_entry_frame.measured_entry.next_widget = self.aspects.aspect_one.title_entry
 
     def update_review(self) -> None:
-        self.output_frame.add_line(self.short_summary.get_text() + '\n')
+        if self.output_frame:
+            self.output_frame.add_line(self.short_summary.get_text() + '\n')
         self.output_frame.add_line(self.aspects.get_text() + '\n')
         self.output_frame.add_line(self.cost_value.get_text() + '\n')
         self.output_frame.add_line(self.pros.get_text() + '\n\n')
         self.output_frame.add_line(self.cons.get_text() + '\n')
 
     def clear(self) -> None:
-        self.output_frame.smart_text.clear_text()
+        if self.output_frame:
+            self.output_frame.smart_text.clear_text()
         self.short_summary.clear_text()
         self.aspects.clear_text()
         self.cost_value.clear_text()
@@ -72,6 +77,6 @@ class ProductFrame(Frame):
 if __name__ == '__main__':
     r = Tk()
 
-    me = ProductFrame(master=r)
+    me = ProductFrame(master=r, include_output_frame=True)
     me.pack(fill=BOTH, expand=YES)
     mainloop()

@@ -1,6 +1,6 @@
 from tkinter import *
 
-from components.ui.measured_labeled_frame import MeasuredLabeledFrame
+from components.ui.common.measured_labeled_frame import MeasuredLabeledFrame
 
 
 class ProConsFrame(Frame):

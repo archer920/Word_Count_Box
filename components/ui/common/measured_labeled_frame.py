@@ -1,6 +1,6 @@
 from tkinter import *
 
-from components.ui.progress_entry_frame import ProgressEntryFrame
+from components.ui.common.progress_entry_frame import ProgressEntryFrame
 
 
 class MeasuredLabeledFrame(Frame):

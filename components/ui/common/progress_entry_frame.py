@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter.ttk import *
 
-from components.ui.measured_entry_text import MeasuredEntryText
+from components.ui.common.measured_entry_text import MeasuredEntryText
 
 
 class ProgressEntryFrame(Frame):

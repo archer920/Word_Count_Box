@@ -1,6 +1,6 @@
 from tkinter import *
 
-from components.ui.measured_entry_frame import MeasuredEntryFrame
+from components.ui.common.measured_entry_frame import MeasuredEntryFrame
 
 
 class AspectFrame(Frame):

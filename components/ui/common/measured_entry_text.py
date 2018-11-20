@@ -1,6 +1,6 @@
 from tkinter import *
 
-from components.ui.smart_text import SmartText
+from components.ui.common.smart_text import SmartText
 
 
 class MeasuredEntryText(SmartText):
@@ -27,6 +27,11 @@ class MeasuredEntryText(SmartText):
     def get_text(self) -> str:
         return self.get(1.0, END).rstrip().lstrip()
 
+    def change_required_words(self, required_word_count: int) -> None:
+        expected_height = int(required_word_count / MeasuredEntryText.HEIGHT_OFFSET)
+        if expected_height == 0:
+            expected_height = 1
+        self.configure(height=expected_height)
 
 if __name__ == '__main__':
     r = Tk()
